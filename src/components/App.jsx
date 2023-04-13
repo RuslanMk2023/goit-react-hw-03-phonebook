@@ -15,25 +15,19 @@ export class App extends Component {
     contacts && this.setState({ contacts: JSON.parse(contacts) });
   }
 
+  componentDidUpdate() {
+    this.updContactsLocalStorage;
+  }
+
   setFilterValue = evn => this.setState({ filterValue: evn.target.value });
 
-  addNewContact = newContactObj => {
-    this.setState(
-      prevState => ({
-        contacts: [...prevState.contacts, newContactObj],
-      }),
-      this.updContactsLocalStorage
-    );
-  };
+  addNewContact = newContactObj =>
+    this.setState({ contacts: [...prevState.contacts, newContactObj] });
 
-  deleteContact = id => {
-    this.setState(
-      prevState => ({
-        contacts: prevState.contacts.filter(contact => contact.id !== id),
-      }),
-      this.updContactsLocalStorage
-    );
-  };
+  deleteContact = id =>
+    this.setState({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    });
 
   getContactsForShow = () => {
     const { contacts, filterValue } = this.state;
