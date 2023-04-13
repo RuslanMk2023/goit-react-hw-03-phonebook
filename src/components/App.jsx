@@ -16,17 +16,17 @@ export class App extends Component {
   }
 
   componentDidUpdate() {
-    this.updContactsLocalStorage;
+    this.updContactsLocalStorage();
   }
 
   setFilterValue = evn => this.setState({ filterValue: evn.target.value });
 
   addNewContact = newContactObj =>
-    this.setState({ contacts: [...this.contacts, newContactObj] });
+    this.setState({ contacts: [...this.state.contacts, newContactObj] });
 
   deleteContact = id =>
     this.setState({
-      contacts: this.contacts.filter(contact => contact.id !== id),
+      contacts: this.state.contacts.filter(contact => contact.id !== id),
     });
 
   getContactsForShow = () => {
