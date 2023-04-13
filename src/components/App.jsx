@@ -22,11 +22,11 @@ export class App extends Component {
   setFilterValue = evn => this.setState({ filterValue: evn.target.value });
 
   addNewContact = newContactObj =>
-    this.setState({ contacts: [...prevState.contacts, newContactObj] });
+    this.setState({ contacts: [...this.contacts, newContactObj] });
 
   deleteContact = id =>
     this.setState({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
+      contacts: this.contacts.filter(contact => contact.id !== id),
     });
 
   getContactsForShow = () => {
