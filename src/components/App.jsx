@@ -6,28 +6,21 @@ import styles from './App.module.css';
 
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: JSON.parse(localStorage.getItem('contacts')) || [], // Перевіряємо localStorage на наявність контактів
     filterValue: '',
   };
 
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    contacts && this.setState({ contacts: JSON.parse(contacts) });
-  }
-
-  componentDidUpdate() {
-    this.updContactsLocalStorage();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+        localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
   }
 
   setFilterValue = evn => this.setState({ filterValue: evn.target.value });
 
-  addNewContact = newContactObj =>
-    this.setState({ contacts: [...this.state.contacts, newContactObj] });
+  addNewContact = newContactObj => this.setState({ contacts: [...this.state.contacts, newContactObj] });
 
-  deleteContact = id =>
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== id),
-    });
+  deleteContact = id => this.setState({ contacts: this.state.contacts.filter(contact => contact.id !== id),});
 
   getContactsForShow = () => {
     const { contacts, filterValue } = this.state;
@@ -37,10 +30,6 @@ export class App extends Component {
     return contacts.filter(({ name }) =>
       name.toLowerCase().includes(filterValue.trim().toLowerCase())
     );
-  };
-
-  updContactsLocalStorage = () => {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   };
 
   render() {
