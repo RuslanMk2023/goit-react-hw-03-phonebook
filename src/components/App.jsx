@@ -10,7 +10,7 @@ export class App extends Component {
     filterValue: '',
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevState) {
     if (prevState.contacts !== this.state.contacts) {
         localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
@@ -18,9 +18,9 @@ export class App extends Component {
 
   setFilterValue = evn => this.setState({ filterValue: evn.target.value });
 
-  addNewContact = newContactObj => this.setState({ contacts: [...this.state.contacts, newContactObj] });
+  addNewContact = newContactObj => this.setState(state => ({ contacts: [...state.contacts, newContactObj] }));
 
-  deleteContact = id => this.setState({ contacts: this.state.contacts.filter(contact => contact.id !== id),});
+  deleteContact = id => this.setState(state => ({ contacts: state.contacts.filter(contact => contact.id !== id)}));
 
   getContactsForShow = () => {
     const { contacts, filterValue } = this.state;
